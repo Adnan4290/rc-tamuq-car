@@ -1,10 +1,9 @@
 
 # main.py
 # import the necessary packages
-from flask import Flask, render_template, Response, request, send_from_directory
+from flask import Flask, render_template, Response, request, send_from_directory,jsonify,json
 # from camera import VideoCamera
 import os
-
 # pi_camera = VideoCamera(flip=False) # flip pi camera if upside down.
 pi_camera = None
 
@@ -63,7 +62,15 @@ def control():
         controls['last_direction'] = 0      
     print(controls)
 
-    return 'OK'
+    return direction
+speed=3
+@app.route('/speed', methods=['POST'])
+def update_speed():
+    data = request.form.get('speed')
+    speed = data
+    # Update your speed variable here
+    return jsonify({'message': 'Speed updated successfully'})
+
 
 if __name__ == '__main__':
 

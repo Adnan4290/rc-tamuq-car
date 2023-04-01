@@ -12,6 +12,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="/static/style.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
 <body>
 
@@ -44,71 +46,91 @@
         </button>
       </a>
       <div class="dpad">
-        <button id="up-btn" class="dpad-btn" >
+        <button id="up-btn" class="dpad-btn">
           <i class="fa fa-arrow-up fa-2x" aria-hidden="true"></i>
         </button>
         <button id="down-btn" class="dpad-btn">
           <i class="fa fa-arrow-down fa-2x" aria-hidden="true"></i>
         </button>
-        <button id="left-btn" class="dpad-btn" >
+        <button id="left-btn" class="dpad-btn">
           <i class="fa fa-arrow-left fa-2x" aria-hidden="true"></i>
         </button>
-        <button id="right-btn" class="dpad-btn" >
+        <button id="right-btn" class="dpad-btn">
           <i class="fa fa-arrow-right fa-2x" aria-hidden="true"></i>
         </button>
       </div>
+      <br>
+      <input id="speed-slider" type="range" min="0" max="5" value="3" step="0.5" orient="horizontal">
     </div>
 
   </div>
   <script>
- document.getElementById('up-btn').addEventListener('mousedown', function () {
-  sendControl('up');
-});
+    // Get the slider
+    $(document).ready(function () {
+      $('#speed-slider').change(function () {
+        var speed = $(this).val();
+        $.ajax({
+          type: 'POST',
+          url: '/speed',
+          data: { speed: speed },
+          success: function (response) {
+            console.log('Speed updated successfully!');
+          },
+          error: function (error) {
+            console.log('Error updating speed: ' + error);
+          }
+        });
+      });
+    });
 
-// Stop sending the signal when the up button is released
-document.getElementById('up-btn').addEventListener('mouseup', function () {
-  sendControl('stop');
-});
+    document.getElementById('up-btn').addEventListener('mousedown', function () {
+      sendControl('up');
+    });
 
-// Repeat the same process for the other buttons
-document.getElementById('down-btn').addEventListener('mousedown', function () {
-  sendControl('down');
-});
+    // Stop sending the signal when the up button is released
+    document.getElementById('up-btn').addEventListener('mouseup', function () {
+      sendControl('stop');
+    });
 
-document.getElementById('down-btn').addEventListener('mouseup', function () {
-  sendControl('stop');
-});
+    // Repeat the same process for the other buttons
+    document.getElementById('down-btn').addEventListener('mousedown', function () {
+      sendControl('down');
+    });
 
-document.getElementById('left-btn').addEventListener('mousedown', function () {
-  sendControl('left');
-});
+    document.getElementById('down-btn').addEventListener('mouseup', function () {
+      sendControl('stop');
+    });
 
-document.getElementById('left-btn').addEventListener('mouseup', function () {
-  sendControl('stop');
-});
+    document.getElementById('left-btn').addEventListener('mousedown', function () {
+      sendControl('left');
+    });
 
-document.getElementById('right-btn').addEventListener('mousedown', function () {
-  sendControl('right');
-});
+    document.getElementById('left-btn').addEventListener('mouseup', function () {
+      sendControl('stop');
+    });
 
-document.getElementById('right-btn').addEventListener('mouseup', function () {
-  sendControl('stop');
-});
+    document.getElementById('right-btn').addEventListener('mousedown', function () {
+      sendControl('right');
+    });
 
-// Function to send the control signal to the backend
-function sendControl(direction) {
-  $.ajax({
-    url: '/controls',
-    type: 'POST',
-    data: { direction: direction },
-    success: function (response) {
-      console.log(response);
-    },
-    error: function (error) {
-      console.log(error);
+    document.getElementById('right-btn').addEventListener('mouseup', function () {
+      sendControl('stop');
+    });
+
+    // Function to send the control signal to the backend
+    function sendControl(direction) {
+      $.ajax({
+        url: '/controls',
+        type: 'POST',
+        data: { direction: direction },
+        success: function (response) {
+          console.log(response);
+        },
+        error: function (error) {
+          console.log(error);
+        }
+      });
     }
-  });
-}
   </script>
 
 
