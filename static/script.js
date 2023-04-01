@@ -24,18 +24,6 @@ button.onclick = function () {
         div.style.display = 'block';
     }
 };
-
-// Take and save a photo, call picture function in main.py
-$(function () {
-    $('a#take-picture-button').on('click', function (e) {
-        e.preventDefault()
-        $.getJSON('/picture',
-            function (data) {
-                //do nothing
-            });
-        return false;
-    });
-});
 //code for controls
 document.getElementById('up-button').addEventListener('mousedown', function () {
     sendControl('up');
