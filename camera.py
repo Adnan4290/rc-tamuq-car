@@ -1,7 +1,4 @@
-#Modified by smartbuilds.io
-#Date: 27.09.20
-#Desc: This scrtipt script..
-
+# camera.py
 import cv2 as cv
 from imutils.video.pivideostream import PiVideoStream
 import imutils

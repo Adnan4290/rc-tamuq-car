@@ -1,4 +1,6 @@
+// Script.js for the web interface 
 // take picture
+
 var button = document.getElementById('take-pica-button');
 
 button.onclick = function () {
@@ -25,7 +27,7 @@ button.onclick = function () {
 
 // Take and save a photo, call picture function in main.py
 $(function () {
-    $('a#take-picture').on('click', function (e) {
+    $('a#take-picture-button').on('click', function (e) {
         e.preventDefault()
         $.getJSON('/picture',
             function (data) {
@@ -34,3 +36,52 @@ $(function () {
         return false;
     });
 });
+//code for controls
+document.getElementById('up-button').addEventListener('mousedown', function () {
+    sendControl('up');
+  });
+  
+  // Stop sending the signal when the up button is released
+  document.getElementById('up-button').addEventListener('mouseup', function () {
+    sendControl('stop');
+  });
+  
+  // Repeat the same process for the other buttons
+  document.getElementById('down-button').addEventListener('mousedown', function () {
+    sendControl('down');
+  });
+  
+  document.getElementById('down-button').addEventListener('mouseup', function () {
+    sendControl('stop');
+  });
+  
+  document.getElementById('left-button').addEventListener('mousedown', function () {
+    sendControl('left');
+  });
+  
+  document.getElementById('left-button').addEventListener('mouseup', function () {
+    sendControl('stop');
+  });
+  
+  document.getElementById('right-button').addEventListener('mousedown', function () {
+    sendControl('right');
+  });
+  
+  document.getElementById('right-button').addEventListener('mouseup', function () {
+    sendControl('stop');
+  });
+  
+  // Function to send the control signal to the backend
+  function sendControl(direction) {
+    $.ajax({
+      url: '/controls',
+      type: 'POST',
+      data: { direction: direction },
+      success: function (response) {
+        console.log(response);
+      },
+      error: function (error) {
+        console.log(error);
+      }
+    });
+  }
