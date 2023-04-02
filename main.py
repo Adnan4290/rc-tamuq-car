@@ -2,10 +2,9 @@
 # main.py
 # import the necessary packages
 from flask import Flask, render_template, Response, request, send_from_directory,jsonify,json
-# from camera import VideoCamera
+from camera import VideoCamera
 import os
-# pi_camera = VideoCamera(flip=False) # flip pi camera if upside down.
-pi_camera = None
+pi_camera = VideoCamera(flip=False) # flip pi camera if upside down.
 
 # App Globals (do not edit)
 app = Flask(__name__)
@@ -17,12 +16,12 @@ def index():
 
 
 def gen(camera):
-    # #get camera frame
-    # while True:
-        # frame = camera.get_frame()
-        # yield (b'--frame\r\n'
-            #    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
-   return None
+    #get camera frame
+    while True:
+        frame = camera.get_frame()
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+   
 
 
 @app.route('/video_feed')
@@ -60,7 +59,26 @@ def control():
         last_direction = 'right'
     elif direction == 'stop':
         controls['last_direction'] = 0      
-    print(controls)
+    # converting list to array     
+    control_array = list(controls.values())
+    print(control_array)
+    # sending the array to the arduino
+    import RPi.GPIO as GPIO
+
+# Set up GPIO pins
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(16, GPIO.OUT)
+    GPIO.setup(26, GPIO.OUT)
+    GPIO.setup(6, GPIO.OUT)
+    GPIO.setup(5, GPIO.OUT)
+
+    # Send data over GPIO pins
+    for i, val in enumerate(control_array):
+     GPIO.output(control_array[i], val)
+
+
+
+
 
     return direction
 speed=3
