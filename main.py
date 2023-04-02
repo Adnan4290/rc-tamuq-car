@@ -70,7 +70,9 @@ def update_speed():
     speed = data
     # Update your speed variable here
     return jsonify({'message': 'Speed updated successfully'})
-
+@app.route('/demo',methods=['GET','POST'])
+def demo():
+    return render_template('controller_demo.html')
 
 if __name__ == '__main__':
 

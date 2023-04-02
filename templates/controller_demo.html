@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>controller demo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/static/style.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/static/gamepad.js"></script>
+<script src="/static/script.js"></script>
+<!-- <script src="/static/gamepad.js"></script> -->
+</head>
+
+<body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<!-- HTML buttons -->
+<button id="up-btn">Up</button>
+<button id="down-btn">Down</button>
+<button id="left-btn">Left</button>
+<button id="right-btn">Right</button>
+
+<script>
+
+  // Define button mappings
+  const buttonnumbers = {
+    12: 'up',
+    13: 'down',
+    14: 'left',
+    15: 'right'
+  };
+
+  // Initialize gamepad
+  const gamepad = new Gamepad();
+
+  // Define button press event listener
+  gamepad.on('press', 'd_pad_up', function() {
+    $('#' + buttonnumbers[12]).mousedown();
+  });
+
+  // Define button release event listener
+  gamepad.on('release', 'd_pad_up', function() {
+    $('#' + buttonnumbers[12]).mouseup();
+  });
+
+  // Define button press event listener
+  gamepad.on('press', 'd_pad_down', function() {
+    $('#' + buttonnumbers[13]).mousedown();
+  });
+
+  // Define button release event listener
+  gamepad.on('release', 'd_pad_down', function() {
+    $('#' + buttonnumbers[13]).mouseup();
+  });
+
+  // Define button press event listener
+  gamepad.on('press', 'd_pad_left', function() {
+    $('#' + buttonnumbers[14]).mousedown();
+  });
+
+  // Define button release event listener
+  gamepad.on('release', 'd_pad_left', function() {
+    $('#' + buttonnumbers[14]).mouseup();
+  });
+
+  // Define button press event listener
+  gamepad.on('press', 'd_pad_right', function() {
+    $('#' + buttonnumbers[15]).mousedown();
+  });
+
+  // Define button release event listener
+  gamepad.on('release', 'd_pad_right', function() {
+    $('#' + buttonnumbers[15]).mouseup();
+  });
+
+  // Connect to gamepad
+  gamepad.connect();
+
+</script>
+
+</body>
+</html>
