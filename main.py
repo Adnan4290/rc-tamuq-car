@@ -1,10 +1,10 @@
 
 # main.py
 # import the necessary packages
-from flask import Flask, render_template, Response, request, send_from_directory, jsonify, json
+from flask import Flask, render_template, Response, request,  jsonify
 from camera import VideoCamera
-import os
 import RPi.GPIO as GPIO
+
 pi_camera = VideoCamera(flip=False)  # flip pi camera if upside down.
 
 # App Globals (do not edit)
@@ -66,15 +66,15 @@ def control():
 
 # Set up GPIO pins
     GPIO.setmode(GPIO.BCM)
-    GPIO.setup(16, GPIO.OUT)
-    GPIO.setup(26, GPIO.OUT)
-    GPIO.setup(6, GPIO.OUT)
-    GPIO.setup(5, GPIO.OUT)
+    GPIO.setup(16, GPIO.OUT)#up 
+    GPIO.setup(26, GPIO.OUT)#down
+    GPIO.setup(6, GPIO.OUT)#left
+    GPIO.setup(5, GPIO.OUT)#right
     GPIO.setup(1, GPIO.OUT)  # for speed control
 
-    # Send data over GPIO pins
     # send speed once
     GPIO.output(1, speed)
+    # Send data over GPIO pins
     for i, val in enumerate(control_array):
         GPIO.output(control_array[i], val)
 

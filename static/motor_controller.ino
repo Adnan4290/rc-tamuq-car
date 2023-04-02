@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <Wire.h>
 #include <RoboClaw.h>
+// how do I add the above missing libraries in vs code?  
 
 const int downPin = 8;
 const int upPin = 9;
